@@ -7,46 +7,46 @@ import { Entidades } from "../types/entidade";
 
 
 function Cadastros() {
-  const [Entidade, setEntidade] = useState <Entidades[]>([])
+  // const [Entidade, setEntidade] = useState <Entidades[]>([])
 
-  const handleInserir = async (
+  // const handleInserir = async (
     
-    email: string,
-    senha: string,
-    nome: string,
-    telefone: string,
-    cnpj: string,
-    endereco: string,
-    complemento: string,
-    cidade: string,
-    estado: string,
-    cep: string
-  ) => {
+  //   email: string,
+  //   senha: string,
+  //   nome: string,
+  //   telefone: string,
+  //   cnpj: string,
+  //   endereco: string,
+  //   complemento: string,
+  //   cidade: string,
+  //   estado: string,
+  //   cep: string
+  // ) => {
 
-    let json = await api.AdicionarEntidade(
+  //   let json = await api.AdicionarEntidade(
     
-      email,
-      senha,
-      nome,
-      telefone,
-      cnpj,
-      endereco,
-      complemento,
-      cidade,
-      estado,
-      cep,
-    );
+  //     email,
+  //     senha,
+  //     nome,
+  //     telefone,
+  //     cnpj,
+  //     endereco,
+  //     complemento,
+  //     cidade,
+  //     estado,
+  //     cep,
+  //   );
 
-    if(json.id) {
-      alert(json.message)
-      setEntidade((Entidade) => [...Entidade, json]);
-    }else {
-      alert (json.message)
-    }
+  //   if(json.id) {
+  //     alert(json.message)
+  //     setEntidade((Entidade) => [...Entidade, json]);
+  //   }else {
+  //     alert (json.message)
+  //   }
 
 
 
-  }
+  // }
 
   return (
     <div className="fundoPagLogCad">
@@ -65,7 +65,7 @@ function Cadastros() {
             <div className="textocadastro2">É rápido e fácil</div>
           </div>
           <div>
-            <FormPostCadEntidade onAdd={handleInserir}/>
+            {/* <FormPostCadEntidade onAdd={handleInserir}/> */}
           </div>
         </div>
       </div>
