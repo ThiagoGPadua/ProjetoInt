@@ -1,8 +1,18 @@
+import { Entidades } from "./types/entidade";
+
 export const api = {
   
-  CarregarEntidadeIndividual: async (id: string) => {
+  CarregarEntidadeIndividual: async (id: string): Promise<Entidades> => {
     let response = await fetch("http://localhost:3010/entidades/ID"  + id, {
       method: "GET",
+    });
+    let json = await response.json();
+    return json;
+  },
+
+  CarregarTodasEntidades: async () => {
+    let response = await fetch("http://localhost:3010/entidades/listar", {
+    method: "GET",
     });
     let json = await response.json();
     return json;
@@ -80,9 +90,5 @@ export const api = {
   },
 
   
-  CarregarTodasEntidades: async (param: string) => {
-    let response = await fetch("http://localhost:3010/entidades" + param);
-    let json = await response.json();
-    return json;
-  },
+ 
 };

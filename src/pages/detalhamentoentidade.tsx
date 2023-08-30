@@ -1,43 +1,44 @@
 import { useState, useEffect } from "react";
 import Cabecalho from "../componentes/cabecalho";
-import DadosEntidade from "../componentes/dadosentidade";
 import InfoEntidade from "../componentes/infoentidade/infoentidade";
 import PerfilEntidade from "../componentes/perfilentidade/perfilentidade";
 import { Entidades } from "../types/entidade";
 import { api } from "../api";
 
-function DetalhamentoEntidade() {
+async function DetalhamentoEntidade() {
 
   const [entidades, setEntidades] = useState<Entidades[]>([]);
   const [loading, setLoading] = useState(false);
+  const [entidadesIds, setEntidadesIds] = useState<string[]>([])
 
   useEffect(() => {
-    carregarEntidades();
-  }, []);
+    carregarEntidades(entidadesIds);
+  }, [entidadesIds]);
 
-  const carregarEntidades = async () => {
+  const carregarEntidades = async (ids: string[]) => {
     setLoading(true);
     try {
-      let response = await fetch(
-        "http://localhost:3010/entidades"
-      );
-      let json = await response.json();
+      const promises = ids.map(async (id) => {
+        return api.CarregarEntidadeIndividual(id);
+    });
 
-      const dataArray = Array.isArray(json) ? json : [json];
+    const responses = await Promise.all(promises);
+    const dataArray = responses.flatMap(response => Array.isArray(response) ? response : [response]);
 
-      setEntidades(dataArray);
-    } catch (e) {
-      alert("Falha no carregamento das informações");
-      setLoading(false);
-      console.error(e);
-    }
-  };
+    setEntidades(dataArray);
+    setLoading(false);
+  } catch (e) {
+    alert("Falha no carregamento das informações");
+    setLoading(false);
+    console.error(e);
+  }
+};
   
   return (
     <div>
       <Cabecalho />
-      {entidades.map((item, index) => (
-        <PerfilEntidade key={index} dados={item}/>
+      {entidades.map((entidade, index) => (
+        <PerfilEntidade key={index} dados={entidade}/>
       ))}
        {entidades.map((item, index) => (
         <InfoEntidade key={index} dados={item} />
